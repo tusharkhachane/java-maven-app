@@ -16,7 +16,6 @@ phases:
       - echo "stage pre_build completed"
   build:
     commands:
-      - /opt/sonar-scanner/bin/sonar-scanner
       - cd $CODEBUILD_SRC_DIR
       - /opt/sonar-scanner/bin/sonar-scanner -Dsonar.sources=. -Dproject.settings=sonar-project.properties -Dsonar.host.url=$SonarQube_URL -Dsonar.login=$SonarQube_Access_Token > sonarqube_scanreport.json
       - echo "build stage completed"
