@@ -62,5 +62,5 @@ phases:
   #         exit 1;
   #       fi
 artifacts:
-  files: '**/*'
+  files: 'my-app-1.0-SNAPSHOT.jar'
   base-directory: 'target'
