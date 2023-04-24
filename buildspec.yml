@@ -22,7 +22,8 @@ phases:
       - mvn -v
       - mvn -B -DskipTests clean package
       - ls -larth
-      - /opt/sonar-scanner/bin/sonar-scanner -Dsonar.sources=. -Dproject.settings=sonar-project.properties -Dsonar.host.url=$SonarQube_URL -Dsonar.login=$SonarQube_Access_Token > sonarqube_scanreport.json
+      #- /opt/sonar-scanner/bin/sonar-scanner -Dsonar.sources=. -Dproject.settings=sonar-project.properties -Dsonar.host.url=$SonarQube_URL -Dsonar.login=$SonarQube_Access_Token > sonarqube_scanreport.json
+      - /opt/sonar-scanner/bin/sonar-scanner -Dsonar.sources=. -Dproject.settings=sonar-project.properties -Dsonar.host.url=$SonarQube_URL -Dsonar.login=$SonarQube_Access_Token
       - echo "build stage completed"
   
   # post_build:
