@@ -23,8 +23,6 @@ phases:
       - mvn -B -DskipTests clean package
       - ls -larth
       - /opt/sonar-scanner/bin/sonar-scanner -Dsonar.sources=. -Dproject.settings=sonar-project.properties -Dsonar.host.url=$SonarQube_URL -Dsonar.login=$SonarQube_Access_Token > sonarqube_scanreport.json
-      - ls -larth
-      - cat sonarqube_scanreport.json
       #- /opt/sonar-scanner/bin/sonar-scanner -Dsonar.sources=. -Dproject.settings=sonar-project.properties -Dsonar.host.url=$SonarQube_URL -Dsonar.login=$SonarQube_Access_Token
       - echo "build stage completed"
   
@@ -66,6 +64,8 @@ phases:
   #       fi
   post_build:
     commands:
+    - ls -larth
+    - cat sonarqube_scanreport.json
     - SCAN_RESULT=$(curl -sS -o sonarqube_scanreport.json -u $SonarQube_Access_Token $SonarQube_URL/api/issues/search?createdAfter=2020-10-21&componentKeys=devsecops&severities=CRITICAL,BLOCKER&languages=php&types=VULNERABILITY&onComponentOnly=true)
     - quality_status=$(jq -r '.projectStatus.status' sonarqube_scanreport.json)
     - |
