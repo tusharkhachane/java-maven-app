@@ -65,7 +65,7 @@ phases:
   post_build:
     commands:
     - SCAN_RESULT=$(curl -sS -o sonarqube_scanreport.json -u $SonarQube_Access_Token $SonarQube_URL/api/issues/search?createdAfter=2020-10-21&componentKeys=devsecops&severities=CRITICAL,BLOCKER&languages=php&types=VULNERABILITY&onComponentOnly=true)
-    - quality_status=$(jq -r '.projectStatus.status' sonarqube_scanrport.json)
+    - quality_status=$(jq -r '.projectStatus.status' sonarqube_scanreport.json)
     - |
       if [ $quality_status = "ERROR" ] || [ $quality_status = "WARN" ]; then
         echo "SonarQube analysis failed with status: $quality_status"
