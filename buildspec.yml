@@ -70,11 +70,14 @@ phases:
     - echo "Checking SonarQube analysis status"
     - quality_status=$(jq -r '.projectStatus.status' sonarqube_scanreport.json)
     - |
-      if [ $quality_status = "FAILED" ]; then
-        echo "SonarQube analysis failed: $quality_status"
+      if [ "$quality_status" = "ERROR" ] || [ "$quality_status" = "WARN" ] || [ "$quality_status" = "FAILED" ]; then
+        echo "SonarQube analysis failed"
         exit 1
+      elif [ "$quality_status" = "PASSED" ]; then
+        echo "SonarQube analysis passed"
       else
-        echo "SonarQube analysis passed: $quality_status"
+        echo "Invalid status: $quality_status"
+        exit 1
       fi
 artifacts:
   files: 'my-app-1.0-SNAPSHOT.jar'
