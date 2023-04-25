@@ -75,8 +75,6 @@ phases:
         exit 1
       elif [ $quality_status = "PASSED" ]; then
         echo "SonarQube analysis passed with status: $quality_status"
-  #     elif [ -z "$quality_status" ]; then
-  #       echo "SonarQube analysis status is not available"
       else
         echo "Invalid status: $quality_status"
         exit 1
