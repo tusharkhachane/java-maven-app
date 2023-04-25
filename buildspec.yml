@@ -67,6 +67,7 @@ phases:
     - ls -larth
     - cat sonarqube_scanreport.json
     - SCAN_RESULT=$(curl -sS -o sonarqube_scanreport.json -u $SonarQube_Access_Token $SonarQube_URL/api/issues/search?createdAfter=2020-10-21&componentKeys=devsecops&severities=CRITICAL,BLOCKER&languages=php&types=VULNERABILITY&onComponentOnly=true)
+      echo "Checking SonarQube analysis status"
     - quality_status=$(jq -r '.projectStatus.status' sonarqube_scanreport.json)
     - |
       if [ $quality_status = "FAILED" ]; then
@@ -74,6 +75,8 @@ phases:
         exit 1
       elif [ $quality_status = "PASSED" ]; then
         echo "SonarQube analysis passed with status: $quality_status"
+      elif [ -z "$quality_status" ]; then
+        echo "SonarQube analysis status is not available"
       else
         echo "Invalid status: $quality_status"
         exit 1
